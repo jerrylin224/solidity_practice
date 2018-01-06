@@ -1,57 +1,46 @@
 App = {
   web3Provider: null,
   contracts: {},
+  account: 0X0,
 
   init: function() {
-    // Load articles
-    var articlesRow = $('#articlesRow');
-    var articleTemplate = $('#articleTemplate');
-
-    articleTemplate.find('.panel-title').text("article one");
-    articleTemplate.find('.article-description').text("Description for this article");
-    articleTemplate.find('.article-price').text("10.23");
-    articleTemplate.find('.article-seller').text("0x01234567890123456789012345678901");
-
-    articlesRow.append(articleTemplate.html());
-
     return App.initWeb3();
   },
 
   initWeb3: function() {
-    /*
-     * Replace me...
-     */
-
+    if (typeof web3 !== 'undefined') {
+      App.web3Provider = web3.currentProvider;
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
+      web3 = new Web3(App.web3Provider);
+    }
+    App.displayAccountInfo();
     return App.initContract();
   },
 
+  displayAccountInfo: function() {
+    web3.eth.getCoinbase(function(err, account) {
+      if (err === null) {
+        App.account = account;
+        $("#account").text(account);
+        web3.eth.getBalance(account, function(err, balance) {
+          if (err === null) {
+            $("#accountBalance").text(web3.fromWei(balance, "ether") + " ETH");
+          }
+        });
+      }
+    })
+  },
+
   initContract: function() {
-    /*
-     * Replace me...
-     */
-
-    return App.bindEvents();
-  },
-
-  bindEvents: function() {
-    $(document).on('click', '.btn-adopt', App.handleAdopt);
-  },
-
-  handleAdopt: function() {
-    event.preventDefault();
-
-    var petId = parseInt($(event.target).data('id'));
-
-    /*
-     * Replace me...
-     */
-  },
-
-  markAdopted: function(adopters, account) {
-    /*
-     * Replace me...
-     */
+    $.getJSON('ChainList.json', function(chainListArtifact) {
+      App.contracts.ChainList = TruffleContract(chainListArtifact);
+      App.contracts.ChainList.setProvider(App.web3Provider);
+    });
   }
+
+
 
 };
 
