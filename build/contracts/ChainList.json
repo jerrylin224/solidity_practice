@@ -147,8 +147,37 @@
       "links": {},
       "address": "0x95c4eab20e24cb8cf7ddfefb45d811557b78acdf",
       "updated_at": 1515809946369
+    },
+    "1515819039943": {
+      "events": {
+        "0x229ecd5f3a912d97d6c520c3ce09b3c5df244541e239b7a3c24d18c06505bcb9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "_seller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "_name",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "_price",
+              "type": "uint256"
+            }
+          ],
+          "name": "sellArticleEvent",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xfb0a4e5bbc481ae30826742c325ac26442cf0253",
+      "updated_at": 1515819049169
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1515809946369
+  "updated_at": 1515819049169
 }
